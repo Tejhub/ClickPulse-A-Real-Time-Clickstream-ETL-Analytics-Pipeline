@@ -1,0 +1,4 @@
+v1
+{"path":"file:///home/talentum/ETL_Project/data_lake/bronze/part-00000-29598113-5d96-4c7b-ba72-79a5e47d3b46-c000.snappy.parquet","size":32935,"isDir":false,"modificationTime":1769351690204,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///home/talentum/ETL_Project/data_lake/bronze/part-00001-7d6098d0-687d-4987-8a3a-487f6d57eb75-c000.snappy.parquet","size":35147,"isDir":false,"modificationTime":1769351690204,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///home/talentum/ETL_Project/data_lake/bronze/part-00002-54ee5050-1f03-44c6-a8a9-1155bf2acb35-c000.snappy.parquet","size":33176,"isDir":false,"modificationTime":1769351690200,"blockReplication":1,"blockSize":33554432,"action":"add"}

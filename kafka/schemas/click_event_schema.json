@@ -1,0 +1,11 @@
+
+{
+  "event_time": "string",
+  "order_id": "string",
+  "product_id": "string",
+  "category_id": "string",
+  "category_code": "string",
+  "brand": "string",
+  "price": "double",
+  "user_id": "string"
+}
