@@ -39,47 +39,7 @@ Gold Layer (Aggregated Metrics)
 - Tableau – Data visualization (optional)
 - Local Setup – Cost-efficient, cloud-ready design
 
-▶️ How to Run the Project (Local)  
-
-1️⃣ Prerequisites  
-
-Java 8 or 11  
-Python 3.8+  
-Apache Kafka  
-Apache Spark  
-
-Required Python packages:
-
-pip install pandas kafka-python pyspark
-
-2️⃣ Start Kafka  
-zookeeper-server-start.sh config/zookeeper.properties  
-kafka-server-start.sh config/server.properties  
-
-
-Create topic:
-
-kafka-topics.sh --create \
-  --topic clickpulse_events \
-  --bootstrap-server localhost:9092 \
-  --partitions 3 \
-  --replication-factor 1
-
-3️⃣ Start Spark Streaming  
-spark-submit spark/streaming/clickpulse_streaming_job.py
-
-4️⃣ Start Replay Producer  
-python kafka/producer/clickstream_replay_producer.py  
-
-Streaming data will start flowing into the Bronze layer.
-
-5️⃣ Build Silver Layer  
-spark-submit spark/batch/bronze_to_silver.py
-
-6️⃣ Build Gold Layer  
-spark-submit spark/batch/silver_to_gold.py
-
 👨‍💻 Author  
 
 Tejas Gurav  
-Aspiring Data Engineer | Big Data | Streaming Systems
+Aspiring Data Engineer | Big Data 
