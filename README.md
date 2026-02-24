@@ -1,6 +1,6 @@
 🚀 ClickPulse – Real-Time Clickstream Analytics Pipeline
 
-ClickPulse is an end-to-end real-time clickstream analytics project designed to simulate and process live user behavior data in an e-commerce environment. The project replays a real e-commerce clickstream dataset as streaming events using Apache Kafka and processes them in real time using Spark Structured Streaming (PySpark), following an industry-standard Bronze–Silver–Gold data lake architecture.
+ClickPulse is an end-to-end real-time clickstream analytics project designed to simulate and process live user behavior data in an e-commerce environment. The project replays a real e-commerce clickstream dataset as streaming events using Apache Kafka and processes them in real time using Spark Structured Streaming (PySpark), implementing a cloud-based Bronze–Silver–Gold Medallion Architecture on Amazon S3.
 
 🧠 Project Overview  
 
@@ -8,16 +8,17 @@ Modern applications generate massive volumes of user interaction data every seco
 
 This project focuses on:
 
-Real-time event ingestion  
-Stream processing  
-Data lake design  
+Real-time event ingestion using Kafka
+Distributed stream processing with Spark Structured Streaming
+Cloud data lake implementation using Amazon S3
+Cloud data lake implementation using Amazon S3
 Analytics-ready data preparation  
 
 🔄 Architecture & Workflow
 
 E-commerce Dataset  
         ↓  
-Kafka (Replay Producer – Real-Time Events)  
+Kafka (Producer – Real-Time Events)  
         ↓  
 Spark Structured Streaming (PySpark)  
         ↓  
@@ -34,6 +35,7 @@ Gold Layer (Aggregated Metrics)
 - Apache Kafka – Real-time event streaming
 - Apache Spark Structured Streaming (PySpark) – Stream processing
 - Spark SQL – Data transformations
+- Amazon S3 – Cloud data lake storage
 - Python – Data handling and replay producer
 - Parquet – Data lake storage format
 - Tableau – Data visualization (optional)
