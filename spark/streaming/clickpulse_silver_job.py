@@ -1,51 +1,38 @@
+import os
+from dotenv import load_dotenv
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, to_timestamp
+from pyspark.sql.functions import col
 
-# ---------------------------------------
-# 1. Spark Session
-# ---------------------------------------
-spark = SparkSession.builder \
-    .appName("ClickPulseSilverBatch") \
-    .getOrCreate()
+load_dotenv()
 
-# ---------------------------------------
-# 2. Read Bronze (RAW streaming output)
-# ---------------------------------------
-bronze_df = spark.read.parquet(
-    "file:/home/talentum/ETL_Project/data_lake/bronze"
-)
+AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+BUCKET = os.getenv("BUCKET_NAME")
 
-# ---------------------------------------
-# 3. Silver Cleaning Rules
-# ---------------------------------------
+spark = SparkSession.builder\
+            .appName("ClickPulseSilverBatch")\
+            .config("spark.hadoop.fs.s3a.access.key", AWS_ACCESS_KEY)\
+            .config("spark.hadoop.fs.s3a.secret.key", AWS_SECRET_KEY)\
+            .getOrCreate()
+
+spark.sparkContext.setLogLevel("WARN")
+
+bronze_df = spark.read.parquet(f"s3a://{BUCKET}/bronze/")
+
 silver_df = (
     bronze_df
-    # Parse timestamp
-    .withColumn(
-        "event_time",
-        to_timestamp(col("event_time"), "yyyy-MM-dd HH:mm:ss")
-    )
-
-    # Keep only valid rows
     .filter(col("price").isNotNull())
+    .filter(col("price") > 0)
     .filter(col("order_id").isNotNull())
     .filter(col("user_id").isNotNull())
-
-    # VERY IMPORTANT FIX:
-    # Remove rows where category_code is numeric / corrupted
     .filter(col("category_code").isNotNull())
-    .filter(col("category_code").rlike("[a-zA-Z]"))
-
-    # Remove duplicate orders
-    .dropDuplicates(["order_id"])
+    .dropDuplicates(["order_id", "event_time"])
 )
 
-# ---------------------------------------
-# 4. Write Silver (overwrite, single file)
-# ---------------------------------------
-silver_df.coalesce(1).write \
-    .mode("overwrite") \
-    .parquet("file:/home/talentum/ETL_Project/data_lake/silver")
+# Incremental write by partition overwrite (better than full overwrite)
+silver_df.write\
+    .mode("append")\
+    .partitionBy("year", "month", "day")\
+    .parquet(f"s3a://{BUCKET}/silver/")
 
 spark.stop()
-
