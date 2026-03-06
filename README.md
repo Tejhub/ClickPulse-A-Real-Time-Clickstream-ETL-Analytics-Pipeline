@@ -34,7 +34,6 @@ Gold Layer (Aggregated Metrics)
 
 - Apache Kafka – Real-time event streaming
 - Apache Spark Structured Streaming (PySpark) – Stream processing
-- Spark SQL – Data transformations
 - Amazon S3 – Cloud data lake storage
 - Python – Data handling and replay producer
 - Parquet – Data lake storage format
